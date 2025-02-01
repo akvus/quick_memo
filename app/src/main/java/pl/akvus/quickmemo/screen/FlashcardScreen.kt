@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -21,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -60,7 +60,7 @@ fun FlashcardScreen(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize()
-                    .background(Color.LightGray),
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
                 verticalArrangement = Arrangement.Center,
             ) {
 
@@ -76,7 +76,7 @@ fun FlashcardScreen(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize()
-                    .background(Color.Gray),
+                    .background(MaterialTheme.colorScheme.surface),
                 verticalArrangement = Arrangement.Center,
             ) {
                 if (showTranslation)
