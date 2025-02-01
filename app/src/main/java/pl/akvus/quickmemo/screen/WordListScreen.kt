@@ -1,20 +1,21 @@
 package pl.akvus.quickmemo.screen
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -24,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import pl.akvus.quickmemo.AddWordDialog
+import pl.akvus.quickmemo.ui.theme.VeryLightGrey
 
 @Composable
 fun WordListScreen(
@@ -35,7 +37,13 @@ fun WordListScreen(
     var showAddDialog by remember { mutableStateOf(false) }
 
     Column {
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = VeryLightGrey)
+                .weight(1f)
+        ) {
+
             items(allWords.size) { index ->
                 val word = allWords[index]
                 var showUpdateDialog by remember { mutableStateOf(false) }
@@ -43,10 +51,16 @@ fun WordListScreen(
                 Row(
                     Modifier
                         .fillMaxWidth()
-                        .padding(16.dp)
+                        .padding(8.dp),
+                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+
                 ) {
+                    Checkbox(
+                        checked = word.isLearned,
+                        onCheckedChange = { viewModel.updateWord(word.copy(isLearned = !word.isLearned)) }
+                    )
                     Text(text = word.wordA)
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Text(text = " - ")
                     Text(text = word.wordB)
                     Spacer(modifier = Modifier.weight(1f))
                     IconButton(onClick = {
@@ -59,10 +73,6 @@ fun WordListScreen(
                     }) {
                         Icon(Icons.Default.Delete, contentDescription = "Delete")
                     }
-                    Checkbox(
-                        checked = word.isLearned,
-                        onCheckedChange = { viewModel.updateWord(word.copy(isLearned = !word.isLearned)) }
-                    )
 
                     if (showUpdateDialog)
                         AddWordDialog(
@@ -77,12 +87,21 @@ fun WordListScreen(
             }
         }
 
-        Button(onClick = navigateToFlashcard) {
-            Text("Start Learning")
-        }
 
-        Button(onClick = { showAddDialog = true }) {
-            Text("Show Add Word Dialog")
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            TextButton(onClick = navigateToFlashcard) {
+                Text("Start Learning")
+            }
+
+            TextButton(onClick = { showAddDialog = true }) {
+                Text("Add Word")
+            }
+
         }
 
         if (showAddDialog) {
