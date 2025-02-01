@@ -84,6 +84,25 @@ fun FlashcardScreen(
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.align(CenterHorizontally)
                     )
+                else {
+                    var counter by remember { mutableStateOf(5) }
+
+                    LaunchedEffect(key1 = counter) {
+                        if (counter > 0) {
+                            delay(1000)
+                            counter--
+                        } else {
+                            showTranslation = true
+                        }
+                    }
+
+                    Text(
+                        text = "$counter...",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.align(CenterHorizontally)
+                    )
+                }
 
             }
 
