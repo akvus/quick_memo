@@ -1,4 +1,4 @@
-package pl.akvus.quickmemo.entity
+package pl.akvus.quickmemo.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

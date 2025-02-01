@@ -1,4 +1,4 @@
-package pl.akvus.quickmemo.entity
+package pl.akvus.quickmemo.db
 
 import android.content.Context
 import androidx.room.Database

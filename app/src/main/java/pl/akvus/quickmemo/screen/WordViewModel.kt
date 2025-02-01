@@ -1,4 +1,4 @@
-package pl.akvus.quickmemo
+package pl.akvus.quickmemo.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -7,8 +7,9 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.launch
-import pl.akvus.quickmemo.entity.WordDao
-import pl.akvus.quickmemo.entity.WordEntity
+import pl.akvus.quickmemo.WordsApplication
+import pl.akvus.quickmemo.db.WordDao
+import pl.akvus.quickmemo.db.WordEntity
 
 class WordViewModel(private val wordDao: WordDao) : ViewModel() {
 

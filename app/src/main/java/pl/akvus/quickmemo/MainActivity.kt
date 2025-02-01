@@ -17,6 +17,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import pl.akvus.quickmemo.screen.FlashcardScreen
+import pl.akvus.quickmemo.screen.WordListScreen
+import pl.akvus.quickmemo.screen.WordViewModel
 import pl.akvus.quickmemo.ui.theme.QuickMemoTheme
 
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package pl.akvus.quickmemo
+package pl.akvus.quickmemo.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

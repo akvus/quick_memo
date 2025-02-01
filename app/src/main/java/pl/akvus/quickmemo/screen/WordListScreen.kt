@@ -1,4 +1,4 @@
-package pl.akvus.quickmemo
+package pl.akvus.quickmemo.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import pl.akvus.quickmemo.AddWordDialog
 
 @Composable
 fun WordListScreen(

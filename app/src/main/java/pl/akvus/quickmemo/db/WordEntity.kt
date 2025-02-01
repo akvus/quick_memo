@@ -1,4 +1,4 @@
-package pl.akvus.quickmemo.entity
+package pl.akvus.quickmemo.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
