@@ -1,12 +1,16 @@
 package pl.akvus.quickmemo
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,28 +54,62 @@ fun FlashcardScreen(
                 modifier = Modifier.align(CenterHorizontally)
             )
         } else {
-            Text(
-                text = if (showTranslation) unlearnedWords[currentWordIndex].wordA + " - " + unlearnedWords[currentWordIndex].wordB else unlearnedWords[currentWordIndex].wordA,
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxSize()
+                    .background(Color.LightGray),
+                verticalArrangement = Arrangement.Center,
+            ) {
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(onClick = {
-                showTranslation = !showTranslation
-            }) {
-                Text("Show/Hide Translation")
+                Text(
+                    text = unlearnedWords[currentWordIndex].wordA,
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.align(CenterHorizontally)
+                )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxSize()
+                    .background(Color.Gray),
+                verticalArrangement = Arrangement.Center,
+            ) {
+                if (showTranslation)
+                    Text(
+                        text = unlearnedWords[currentWordIndex].wordB,
+                        fontSize = 32.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.align(CenterHorizontally)
+                    )
 
-            Button(onClick = {
-                currentWordIndex = (currentWordIndex + 1) % unlearnedWords.size
-                showTranslation = false
-            }) {
-                Text("Next Word")
             }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+
+                TextButton(onClick = {
+                    showTranslation = !showTranslation
+                }) {
+                    Text("Show/Hide Translation")
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                TextButton(onClick = {
+                    currentWordIndex = (currentWordIndex + 1) % unlearnedWords.size
+                    showTranslation = false
+                }) {
+                    Text("Next Word")
+                }
+            }
+
         }
     }
 }
