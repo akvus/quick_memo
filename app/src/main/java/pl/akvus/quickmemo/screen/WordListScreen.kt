@@ -1,6 +1,5 @@
 package pl.akvus.quickmemo.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,10 +21,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import pl.akvus.quickmemo.AddWordDialog
-import pl.akvus.quickmemo.ui.theme.VeryLightGrey
+import pl.akvus.quickmemo.ui.theme.QuickMemoTheme
 
 @Composable
 fun WordListScreen(
@@ -36,83 +36,84 @@ fun WordListScreen(
 
     var showAddDialog by remember { mutableStateOf(false) }
 
-    Column {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = VeryLightGrey)
-                .weight(1f)
-        ) {
+    QuickMemoTheme {
+        Column {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) {
 
-            items(allWords.size) { index ->
-                val word = allWords[index]
-                var showUpdateDialog by remember { mutableStateOf(false) }
+                items(allWords.size) { index ->
+                    val word = allWords[index]
+                    var showUpdateDialog by remember { mutableStateOf(false) }
 
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
 
-                ) {
-                    Checkbox(
-                        checked = word.isLearned,
-                        onCheckedChange = { viewModel.updateWord(word.copy(isLearned = !word.isLearned)) }
-                    )
-                    Text(text = word.wordA)
-                    Text(text = " - ")
-                    Text(text = word.wordB)
-                    Spacer(modifier = Modifier.weight(1f))
-                    IconButton(onClick = {
-                        showUpdateDialog = true
-                    }) {
-                        Icon(Icons.Default.Edit, contentDescription = "Update")
-                    }
-                    IconButton(onClick = {
-                        viewModel.deleteWord(word)
-                    }) {
-                        Icon(Icons.Default.Delete, contentDescription = "Delete")
-                    }
-
-                    if (showUpdateDialog)
-                        AddWordDialog(
-                            word,
-                            onDismiss = { showUpdateDialog = false },
-                            onWordAdded = { wordA, wordB ->
-                                viewModel.updateWord(word.copy(wordA = wordA, wordB = wordB))
-                                showUpdateDialog = false
-                            }
+                    ) {
+                        Checkbox(
+                            checked = word.isLearned,
+                            onCheckedChange = { viewModel.updateWord(word.copy(isLearned = !word.isLearned)) }
                         )
+                        Text(text = word.wordA)
+                        Text(text = " - ")
+                        Text(text = word.wordB)
+                        Spacer(modifier = Modifier.weight(1f))
+                        IconButton(onClick = {
+                            showUpdateDialog = true
+                        }) {
+                            Icon(Icons.Default.Edit, contentDescription = "Update")
+                        }
+                        IconButton(onClick = {
+                            viewModel.deleteWord(word)
+                        }) {
+                            Icon(Icons.Default.Delete, contentDescription = "Delete")
+                        }
+
+                        if (showUpdateDialog)
+                            AddWordDialog(
+                                word,
+                                onDismiss = { showUpdateDialog = false },
+                                onWordAdded = { wordA, wordB ->
+                                    viewModel.updateWord(word.copy(wordA = wordA, wordB = wordB))
+                                    showUpdateDialog = false
+                                }
+                            )
+                    }
                 }
             }
-        }
 
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-            TextButton(onClick = navigateToFlashcard) {
-                Text("Start Learning")
-            }
-
-            TextButton(onClick = { showAddDialog = true }) {
-                Text("Add Word")
-            }
-
-        }
-
-        if (showAddDialog) {
-            AddWordDialog(
-                null,
-                onDismiss = { showAddDialog = false },
-                onWordAdded = { wordA, wordB ->
-                    viewModel.insertWord(wordA, wordB)
-                    showAddDialog = false
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                TextButton(onClick = navigateToFlashcard) {
+                    Text("Start Learning")
                 }
-            )
+
+                TextButton(onClick = { showAddDialog = true }) {
+                    Text("Add Word")
+                }
+
+            }
+
+            if (showAddDialog) {
+                AddWordDialog(
+                    null,
+                    onDismiss = { showAddDialog = false },
+                    onWordAdded = { wordA, wordB ->
+                        viewModel.insertWord(wordA, wordB)
+                        showAddDialog = false
+                    }
+                )
+            }
         }
     }
 }
