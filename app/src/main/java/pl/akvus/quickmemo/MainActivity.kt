@@ -1,8 +1,5 @@
 package pl.akvus.quickmemo
 
-import FlashcardScreen
-import WordListScreen
-import WordViewModel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent

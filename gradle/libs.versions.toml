@@ -1,6 +1,6 @@
 [versions]
 agp = "8.5.0"
-kotlin = "1.9.0"
+kotlin = "2.1.0"
 coreKtx = "1.10.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -10,7 +10,6 @@ activityCompose = "1.8.0"
 composeBom = "2024.04.01"
 roomCommon = "2.6.1"
 roomKtx = "2.6.1"
-room = "2.6.1"
 lifecycleLivedataKtx = "2.8.7"
 navigationCompose = "2.8.6"
 runtimeLivedata = "1.7.7"
@@ -40,4 +39,7 @@ androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtim
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+
 

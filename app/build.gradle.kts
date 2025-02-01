@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -52,7 +53,7 @@ android {
 
 dependencies {
     val room_version = "2.6.1"
-    implementation("androidx.room:room-runtime:$room_version")
+
     ksp("androidx.room:room-compiler:$room_version")
 
     implementation(libs.androidx.core.ktx)
