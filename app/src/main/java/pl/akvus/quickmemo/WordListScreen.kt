@@ -31,12 +31,13 @@ fun WordListScreen(
 ) {
     val allWords by viewModel.allWords.observeAsState(initial = emptyList())
 
-    var showDialog by remember { mutableStateOf(false) }
+    var showAddDialog by remember { mutableStateOf(false) }
 
     Column {
         LazyColumn {
             items(allWords.size) { index ->
-                var word = allWords[index]
+                val word = allWords[index]
+                var showUpdateDialog by remember { mutableStateOf(false) }
 
                 Row(
                     Modifier
@@ -47,16 +48,30 @@ fun WordListScreen(
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(text = word.wordB)
                     Spacer(modifier = Modifier.weight(1f))
-                    IconButton(onClick = { /* TODO: Implement edit functionality */ }) {
-                        Icon(Icons.Default.Edit, contentDescription = "Edit")
+                    IconButton(onClick = {
+                        showUpdateDialog = true
+                    }) {
+                        Icon(Icons.Default.Edit, contentDescription = "Update")
                     }
-                    IconButton(onClick = { /* TODO: Implement delete functionality */ }) {
+                    IconButton(onClick = {
+                        viewModel.deleteWord(word)
+                    }) {
                         Icon(Icons.Default.Delete, contentDescription = "Delete")
                     }
                     Checkbox(
                         checked = word.isLearned,
-                        onCheckedChange = { viewModel.updateWord(word.copy(isLearned = it)) }
+                        onCheckedChange = { viewModel.updateWord(word.copy(isLearned = !word.isLearned)) }
                     )
+
+                    if (showUpdateDialog)
+                        AddWordDialog(
+                            word,
+                            onDismiss = { showUpdateDialog = false },
+                            onWordAdded = { wordA, wordB ->
+                                viewModel.updateWord(word.copy(wordA = wordA, wordB = wordB))
+                                showUpdateDialog = false
+                            }
+                        )
                 }
             }
         }
@@ -65,16 +80,17 @@ fun WordListScreen(
             Text("Start Learning")
         }
 
-        Button(onClick = { showDialog = true }) {
+        Button(onClick = { showAddDialog = true }) {
             Text("Show Add Word Dialog")
         }
 
-        if (showDialog) {
+        if (showAddDialog) {
             AddWordDialog(
-                onDismiss = { showDialog = false },
+                null,
+                onDismiss = { showAddDialog = false },
                 onWordAdded = { wordA, wordB ->
-                    // Handle the added words here
-                    showDialog = false
+                    viewModel.insertWord(wordA, wordB)
+                    showAddDialog = false
                 }
             )
         }

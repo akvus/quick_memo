@@ -10,18 +10,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import pl.akvus.quickmemo.entity.WordEntity
 
 @Composable
 fun AddWordDialog(
+    word: WordEntity?,
     onDismiss: () -> Unit,
     onWordAdded: (wordA: String, wordB: String) -> Unit
 ) {
-    var wordA by remember { mutableStateOf("") }
-    var wordB by remember { mutableStateOf("") }
+    var wordA by remember { mutableStateOf(word?.wordA ?: "") }
+    var wordB by remember { mutableStateOf(word?.wordB ?: "") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add New Word") },
+        title = { Text("Save a word") },
         text = {
             Column {
                 TextField(
@@ -41,7 +43,7 @@ fun AddWordDialog(
                 onWordAdded(wordA, wordB)
                 onDismiss()
             }) {
-                Text("Add")
+                Text("Save")
             }
         },
         dismissButton = {

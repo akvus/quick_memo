@@ -1,12 +1,12 @@
 package pl.akvus.quickmemo.entity
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import pl.akvus.quickmemo.entity.WordEntity
 
 @Dao
 interface WordDao {
@@ -17,7 +17,7 @@ interface WordDao {
     suspend fun getUnlearnedWords(): List<WordEntity>
 
     @Query("SELECT * FROM words")
-    suspend fun getAllWords(): List<WordEntity>
+    fun getAllWords(): LiveData<List<WordEntity>>
 
     @Update
     suspend fun updateWord(word: WordEntity)

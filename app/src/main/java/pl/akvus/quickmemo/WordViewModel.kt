@@ -17,7 +17,7 @@ class WordViewModel(private val wordDao: WordDao) : ViewModel() {
     }
 
     val allWords = liveData {
-        emit(wordDao.getAllWords())
+        emitSource(wordDao.getAllWords())
     }
 
     fun insertWord(wordA: String, wordB: String) {
