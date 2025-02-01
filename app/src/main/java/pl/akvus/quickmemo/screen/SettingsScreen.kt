@@ -46,9 +46,9 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             Text(text = "Reveal Time (seconds):")
             Spacer(modifier = Modifier.width(8.dp))
             TextField(
-                value = revealTime.toString(),
+                value = if (revealTime == 0) "" else revealTime.toString(),
                 onValueChange = {
-                    revealTime = it.toIntOrNull() ?: revealTime
+                    revealTime = it.toIntOrNull() ?: 0
                     editor.putInt("reveal_time", revealTime).apply()
                     viewModel.setRevealTime(revealTime)
                 },
