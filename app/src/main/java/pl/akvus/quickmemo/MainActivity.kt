@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,6 +19,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import pl.akvus.quickmemo.screen.FlashcardScreen
+import pl.akvus.quickmemo.screen.SettingsScreen
+import pl.akvus.quickmemo.screen.SettingsViewModel
 import pl.akvus.quickmemo.screen.WordListScreen
 import pl.akvus.quickmemo.screen.WordViewModel
 import pl.akvus.quickmemo.ui.theme.QuickMemoTheme
@@ -45,6 +48,14 @@ class MainActivity : ComponentActivity() {
                                         contentDescription = "Word List"
                                     )
                                 }
+                                IconButton(onClick = {
+                                    navController.navigate("settings")
+                                }) {
+                                    Icon(
+                                        Icons.Filled.Settings,
+                                        contentDescription = "Settings"
+                                    )
+                                }
                             }
                         )
                     }
@@ -57,6 +68,9 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable("flashcard") {
                             FlashcardScreen(viewModel(factory = WordViewModel.Factory))
+                        }
+                        composable("settings") {
+                            SettingsScreen(viewModel(factory = SettingsViewModel.Factory))
                         }
                         composable("word_list") {
                             WordListScreen(viewModel(factory = WordViewModel.Factory)) {

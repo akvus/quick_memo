@@ -1,5 +1,6 @@
 package pl.akvus.quickmemo.screen
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -85,6 +87,17 @@ fun FlashcardScreen(
                         modifier = Modifier.align(CenterHorizontally)
                     )
                 else {
+                    val sharedPreferences =
+                        LocalContext.current.getSharedPreferences("settings", Context.MODE_PRIVATE)
+                    val revealTime = sharedPreferences.getInt("reveal_time", 5)
+
+                    LaunchedEffect(key1 = showTranslation) {
+                        if (showTranslation) {
+                            delay(revealTime * 1000L)
+                            showTranslation = false
+                        }
+                    }
+
                     var counter by remember { mutableStateOf(5) }
 
                     LaunchedEffect(key1 = counter) {
