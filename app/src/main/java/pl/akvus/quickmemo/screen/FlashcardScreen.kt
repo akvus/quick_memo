@@ -91,14 +91,7 @@ fun FlashcardScreen(
                         LocalContext.current.getSharedPreferences("settings", Context.MODE_PRIVATE)
                     val revealTime = sharedPreferences.getInt("reveal_time", 5)
 
-                    LaunchedEffect(key1 = showTranslation) {
-                        if (showTranslation) {
-                            delay(revealTime * 1000L)
-                            showTranslation = false
-                        }
-                    }
-
-                    var counter by remember { mutableStateOf(5) }
+                    var counter by remember { mutableStateOf(revealTime) }
 
                     LaunchedEffect(key1 = counter) {
                         if (counter > 0) {

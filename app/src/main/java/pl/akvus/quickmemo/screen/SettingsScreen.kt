@@ -50,6 +50,7 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                 onValueChange = {
                     revealTime = it.toIntOrNull() ?: revealTime
                     editor.putInt("reveal_time", revealTime).apply()
+                    viewModel.setRevealTime(revealTime)
                 },
                 modifier = Modifier.weight(1f)
             )
