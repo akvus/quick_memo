@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,8 +34,13 @@ class MainActivity : ComponentActivity() {
                         TopAppBar(
                             title = { Text("QuickMemo") },
                             actions = {
-                                IconButton(onClick = { /* navigate to word list */ }) {
-                                    Icon(Icons.Default.List, contentDescription = "Word List")
+                                IconButton(onClick = {
+                                    navController.navigate("word_list")
+                                }) {
+                                    Icon(
+                                        Icons.AutoMirrored.Filled.List,
+                                        contentDescription = "Word List"
+                                    )
                                 }
                             }
                         )
@@ -45,12 +50,10 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = "flashcard",
                         modifier = Modifier
-                                .padding(innerPadding),
+                            .padding(innerPadding),
                     ) {
                         composable("flashcard") {
-                            FlashcardScreen(viewModel(factory = WordViewModel.Factory)) {
-                                navController.navigate("word_list")
-                            }
+                            FlashcardScreen(viewModel(factory = WordViewModel.Factory))
                         }
                         composable("word_list") {
                             WordListScreen(viewModel(factory = WordViewModel.Factory)) {
