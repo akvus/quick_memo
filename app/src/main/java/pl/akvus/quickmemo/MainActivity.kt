@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -40,6 +41,14 @@ class MainActivity : ComponentActivity() {
                         TopAppBar(
                             title = { Text("QuickMemo") },
                             actions = {
+                                IconButton(onClick = {
+                                    navController.navigate("flashcard")
+                                }) {
+                                    Icon(
+                                        Icons.Filled.PlayArrow,
+                                        contentDescription = "Play"
+                                    )
+                                }
                                 IconButton(onClick = {
                                     navController.navigate("word_list")
                                 }) {
