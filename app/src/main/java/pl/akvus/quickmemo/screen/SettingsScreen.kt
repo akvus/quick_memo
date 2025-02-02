@@ -27,6 +27,9 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
     val showCounter by viewModel.showCounter.observeAsState(
         initial = viewModel.showCounter.value ?: true
     )
+    val reverseWords by viewModel.reverseWords.observeAsState(
+        initial = viewModel.reverseWords.value ?: false
+    )
 
     Column(
         modifier = Modifier
@@ -65,6 +68,22 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                 checked = showCounter,
                 onCheckedChange = { isChecked ->
                     viewModel.setShowCounter(isChecked)
+                }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Reverse words:")
+            Spacer(modifier = Modifier.weight(1f))
+            Switch(
+                checked = reverseWords,
+                onCheckedChange = { isChecked ->
+                    viewModel.setReverseWords(isChecked)
                 }
             )
         }

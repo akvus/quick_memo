@@ -16,6 +16,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     val revealTime: LiveData<Int> get() = _revealTime
     private val _showCounter = MutableLiveData<Boolean>()
     val showCounter: LiveData<Boolean> get() = _showCounter
+    private val _reverseWords = MutableLiveData<Boolean>()
+    val reverseWords: LiveData<Boolean> get() = _reverseWords
 
     // TODO inject?
     private val sharedPreferences: SharedPreferences =
@@ -24,6 +26,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     init {
         _revealTime.value = sharedPreferences.getInt("reveal_time", 5)
         _showCounter.value = sharedPreferences.getBoolean("show_counter", true)
+        _reverseWords.value = sharedPreferences.getBoolean("reverse_words", false)
     }
 
     fun setRevealTime(time: Int) {
@@ -40,6 +43,15 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
         with(sharedPreferences.edit()) {
             putBoolean("show_counter", show)
+            apply()
+        }
+    }
+
+    fun setReverseWords(reverse: Boolean) {
+        _reverseWords.value = reverse
+
+        with(sharedPreferences.edit()) {
+            putBoolean("reverse_words", reverse)
             apply()
         }
     }

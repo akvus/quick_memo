@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -33,6 +34,11 @@ import kotlin.random.Random
 fun FlashcardScreen(
     viewModel: WordViewModel,
 ) {
+    // TODO move out of here?
+    val sharedPreferences =
+        LocalContext.current.getSharedPreferences("settings", Context.MODE_PRIVATE)
+    val reverseWords = sharedPreferences.getBoolean("reverse_words", false)
+
     val unlearnedWords by viewModel.unlearnedWords.observeAsState(initial = emptyList())
 
     var currentWordIndex by remember { mutableStateOf(0) }
@@ -49,6 +55,7 @@ fun FlashcardScreen(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
     ) {
+
         if (unlearnedWords.isEmpty()) {
             Text(
                 text = "No words to display",
@@ -57,6 +64,8 @@ fun FlashcardScreen(
                 modifier = Modifier.align(CenterHorizontally)
             )
         } else {
+            val currentWord = unlearnedWords[currentWordIndex]
+
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -66,7 +75,7 @@ fun FlashcardScreen(
             ) {
 
                 Text(
-                    text = unlearnedWords[currentWordIndex].wordA,
+                    text = if (reverseWords) currentWord.wordB else currentWord.wordA,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(CenterHorizontally)
@@ -80,13 +89,11 @@ fun FlashcardScreen(
                     .background(MaterialTheme.colorScheme.surface),
                 verticalArrangement = Arrangement.Center,
             ) {
-                val sharedPreferences =
-                    LocalContext.current.getSharedPreferences("settings", Context.MODE_PRIVATE)
                 val showCounter = sharedPreferences.getBoolean("show_counter", true)
 
                 if (showTranslation || !showCounter) {
                     Text(
-                        text = unlearnedWords[currentWordIndex].wordB,
+                        text = if (reverseWords) currentWord.wordA else currentWord.wordB,
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.align(CenterHorizontally)
@@ -94,7 +101,7 @@ fun FlashcardScreen(
                 } else {
                     val revealTime = sharedPreferences.getInt("reveal_time", 5)
 
-                    var counter by remember { mutableStateOf(revealTime) }
+                    var counter by remember { mutableIntStateOf(revealTime) }
 
                     LaunchedEffect(key1 = counter) {
                         if (counter > 0) {
