@@ -16,12 +16,12 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     val revealTime: LiveData<Int> get() = _revealTime
     private val _showCounter = MutableLiveData<Boolean>()
     val showCounter: LiveData<Boolean> get() = _showCounter
-    val sharedPreferences: SharedPreferences
+
+    // TODO inject?
+    private val sharedPreferences: SharedPreferences =
+        application.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
     init {
-        // TODO inject?
-        sharedPreferences = application.getSharedPreferences("settings", Context.MODE_PRIVATE)
-
         _revealTime.value = sharedPreferences.getInt("reveal_time", 5)
         _showCounter.value = sharedPreferences.getBoolean("show_counter", true)
     }
