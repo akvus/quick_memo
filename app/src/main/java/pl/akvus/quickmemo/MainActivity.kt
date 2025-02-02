@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     topBar = {
                         TopAppBar(
-                            title = { Text("QuickMemo") },
+                            title = { Text("QuickMemot") },
                             actions = {
                                 IconButton(onClick = {
                                     navController.navigate("flashcard")
