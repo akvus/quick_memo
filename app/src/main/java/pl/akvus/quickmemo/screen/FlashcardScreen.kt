@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import kotlin.random.Random
 
 @Composable
 fun FlashcardScreen(
@@ -128,7 +129,11 @@ fun FlashcardScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 TextButton(onClick = {
-                    currentWordIndex = (currentWordIndex + 1) % unlearnedWords.size
+                    currentWordIndex =
+                        (Random.nextInt(
+                            0,
+                            unlearnedWords.size - 1
+                        ))
                     showTranslation = false
                 }) {
                     Text("Next Word")
