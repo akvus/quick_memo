@@ -35,9 +35,7 @@ fun FlashcardScreen(
     settingsViewModel: SettingsViewModel,
 ) {
     val reverseWords = settingsViewModel.reverseWords.value ?: DEFAULT_REVERSE_WORDS
-
     val unlearnedWords by wordViewModel.unlearnedWords.observeAsState(initial = emptyList())
-
     var currentWordIndex by remember { mutableIntStateOf(0) }
     var showTranslation by remember { mutableStateOf(false) }
 
@@ -48,24 +46,27 @@ fun FlashcardScreen(
         }
     }
 
+    val nextWord: () -> Unit = {
+        currentWordIndex =
+            (Random.nextInt(
+                0,
+                unlearnedWords.size
+            ))
+        showTranslation = false
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .clickable {
                 if (showTranslation) {
-                    currentWordIndex =
-                        (Random.nextInt(
-                            0,
-                            unlearnedWords.size
-                        ))
-                    showTranslation = false
+                    nextWord()
                 } else {
                     showTranslation = true
                 }
             },
         verticalArrangement = Arrangement.Center,
     ) {
-
         if (unlearnedWords.isEmpty()) {
             Text(
                 text = "No words to display",
@@ -144,12 +145,7 @@ fun FlashcardScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 TextButton(onClick = {
-                    currentWordIndex =
-                        (Random.nextInt(
-                            0,
-                            unlearnedWords.size
-                        ))
-                    showTranslation = false
+                    nextWord()
                 }) {
                     Text("Next")
                 }
