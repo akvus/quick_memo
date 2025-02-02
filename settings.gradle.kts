@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "QuickMemo"
+rootProject.name = "QuickMemot"
 include(":app")
  
