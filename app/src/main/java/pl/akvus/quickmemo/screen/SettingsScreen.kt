@@ -22,13 +22,13 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel) {
     val revealTime by viewModel.revealTime.observeAsState(
-        initial = viewModel.revealTime.value ?: 5
+        initial = viewModel.revealTime.value ?: DEFAULT_REVEAL_TIME
     )
     val showCounter by viewModel.showCounter.observeAsState(
-        initial = viewModel.showCounter.value ?: true
+        initial = viewModel.showCounter.value ?: DEFAULT_SHOW_COUNTER
     )
     val reverseWords by viewModel.reverseWords.observeAsState(
-        initial = viewModel.reverseWords.value ?: false
+        initial = viewModel.reverseWords.value ?: DEFAULT_REVERSE_WORDS
     )
 
     Column(
@@ -49,7 +49,7 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             TextField(
                 value = if (revealTime == 0) "" else revealTime.toString(),
                 onValueChange = {
-                    viewModel.setRevealTime(it.toIntOrNull() ?: 5)
+                    viewModel.setRevealTime(it.toIntOrNull() ?: DEFAULT_REVEAL_TIME)
                 },
                 modifier = Modifier.weight(1f)
             )

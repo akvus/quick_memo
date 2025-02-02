@@ -11,6 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
 
+const val DEFAULT_REVEAL_TIME = 5
+const val DEFAULT_SHOW_COUNTER = true
+const val DEFAULT_REVERSE_WORDS = false
+
 class SettingsViewModel(
     application: Application,
     private val sharedPreferences: SharedPreferences
@@ -25,9 +29,9 @@ class SettingsViewModel(
 
 
     init {
-        _revealTime.value = sharedPreferences.getInt("reveal_time", 5)
-        _showCounter.value = sharedPreferences.getBoolean("show_counter", true)
-        _reverseWords.value = sharedPreferences.getBoolean("reverse_words", false)
+        _revealTime.value = sharedPreferences.getInt("reveal_time", DEFAULT_REVEAL_TIME)
+        _showCounter.value = sharedPreferences.getBoolean("show_counter", DEFAULT_SHOW_COUNTER)
+        _reverseWords.value = sharedPreferences.getBoolean("reverse_words", DEFAULT_REVERSE_WORDS)
     }
 
     fun setRevealTime(time: Int) {

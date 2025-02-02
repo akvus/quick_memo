@@ -34,11 +34,11 @@ fun FlashcardScreen(
     wordViewModel: WordViewModel,
     settingsViewModel: SettingsViewModel,
 ) {
-    val reverseWords = settingsViewModel.reverseWords.value ?: false
+    val reverseWords = settingsViewModel.reverseWords.value ?: DEFAULT_REVERSE_WORDS
 
     val unlearnedWords by wordViewModel.unlearnedWords.observeAsState(initial = emptyList())
 
-    var currentWordIndex by remember { mutableStateOf(0) }
+    var currentWordIndex by remember { mutableIntStateOf(0) }
     var showTranslation by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = showTranslation) {
@@ -75,8 +75,9 @@ fun FlashcardScreen(
             )
         } else {
             val currentWord = unlearnedWords[currentWordIndex]
-            val showCounter = settingsViewModel.showCounter.value ?: true
-            val revealTime = settingsViewModel.revealTime.value ?: 5
+
+            val showCounter = settingsViewModel.showCounter.value ?: DEFAULT_SHOW_COUNTER
+            val revealTime = settingsViewModel.revealTime.value ?: DEFAULT_REVEAL_TIME
 
             Column(
                 modifier = Modifier
