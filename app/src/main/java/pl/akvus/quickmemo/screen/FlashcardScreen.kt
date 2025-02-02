@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
@@ -91,7 +92,11 @@ fun FlashcardScreen(
                     text = if (reverseWords) currentWord.wordB else currentWord.wordA,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(CenterHorizontally)
+                    lineHeight = 36.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .align(CenterHorizontally)
+                        .padding(16.dp)
                 )
             }
 
@@ -107,7 +112,11 @@ fun FlashcardScreen(
                         text = if (reverseWords) currentWord.wordA else currentWord.wordB,
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.align(CenterHorizontally)
+                        lineHeight = 36.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .align(CenterHorizontally)
+                            .padding(16.dp)
                     )
                 } else {
                     var counter by remember { mutableIntStateOf(revealTime) }
@@ -125,7 +134,11 @@ fun FlashcardScreen(
                         text = "$counter...",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.align(CenterHorizontally)
+                        lineHeight = 36.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .align(CenterHorizontally)
+                            .padding(16.dp)
                     )
                 }
             }
