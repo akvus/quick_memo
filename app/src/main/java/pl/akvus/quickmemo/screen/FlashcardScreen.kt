@@ -35,8 +35,9 @@ fun FlashcardScreen(
     wordViewModel: WordViewModel,
     settingsViewModel: SettingsViewModel,
 ) {
-    val reverseWords = settingsViewModel.reverseWords.value ?: DEFAULT_REVERSE_WORDS
     val unlearnedWords by wordViewModel.unlearnedWords.observeAsState(initial = emptyList())
+
+    val reverseWords = settingsViewModel.reverseWords.value ?: DEFAULT_REVERSE_WORDS
     var currentWordIndex by remember { mutableIntStateOf(0) }
     var showTranslation by remember { mutableStateOf(false) }
 
@@ -153,6 +154,15 @@ fun FlashcardScreen(
                     showTranslation = !showTranslation
                 }) {
                     Text(if (showTranslation) "Hide" else "Reveal")
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                TextButton(onClick = {
+                    wordViewModel.updateWord(currentWord.copy(isLearned = !currentWord.isLearned))
+                    nextWord()
+                }) {
+                    Text("Learned")
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))

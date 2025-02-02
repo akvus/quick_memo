@@ -14,7 +14,7 @@ import pl.akvus.quickmemo.db.WordEntity
 class WordViewModel(private val wordDao: WordDao) : ViewModel() {
 
     val unlearnedWords = liveData {
-        emit(wordDao.getUnlearnedWords())
+        emitSource(wordDao.getUnlearnedWords())
     }
 
     val allWords = liveData {
