@@ -2,6 +2,7 @@ package pl.akvus.quickmemo.screen
 
 import android.content.Context
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -52,9 +53,23 @@ fun FlashcardScreen(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable {
+                if (showTranslation) {
+                    currentWordIndex =
+                        (Random.nextInt(
+                            0,
+                            unlearnedWords.size - 1
+                        ))
+                    showTranslation = false
+                } else {
+                    showTranslation = true
+                }
+            },
         verticalArrangement = Arrangement.Center,
-    ) {
+
+        ) {
 
         if (unlearnedWords.isEmpty()) {
             Text(
@@ -82,6 +97,9 @@ fun FlashcardScreen(
                 )
             }
 
+            val showCounter = sharedPreferences.getBoolean("show_counter", true)
+            val revealTime = sharedPreferences.getInt("reveal_time", 5)
+
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -89,8 +107,6 @@ fun FlashcardScreen(
                     .background(MaterialTheme.colorScheme.surface),
                 verticalArrangement = Arrangement.Center,
             ) {
-                val showCounter = sharedPreferences.getBoolean("show_counter", true)
-
                 if (showTranslation || !showCounter) {
                     Text(
                         text = if (reverseWords) currentWord.wordA else currentWord.wordB,
@@ -99,8 +115,6 @@ fun FlashcardScreen(
                         modifier = Modifier.align(CenterHorizontally)
                     )
                 } else {
-                    val revealTime = sharedPreferences.getInt("reveal_time", 5)
-
                     var counter by remember { mutableIntStateOf(revealTime) }
 
                     LaunchedEffect(key1 = counter) {
@@ -132,7 +146,7 @@ fun FlashcardScreen(
                 TextButton(onClick = {
                     showTranslation = !showTranslation
                 }) {
-                    Text("Show/Hide Translation")
+                    Text(if (showTranslation) "Hide" else "Reveal")
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
