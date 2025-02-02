@@ -1,6 +1,5 @@
 package pl.akvus.quickmemo.screen
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,14 +31,12 @@ import kotlin.random.Random
 
 @Composable
 fun FlashcardScreen(
-    viewModel: WordViewModel,
+    wordViewModel: WordViewModel,
+    settingsViewModel: SettingsViewModel,
 ) {
-    // TODO move out of here?
-    val sharedPreferences =
-        LocalContext.current.getSharedPreferences("settings", Context.MODE_PRIVATE)
-    val reverseWords = sharedPreferences.getBoolean("reverse_words", false)
+    val reverseWords = settingsViewModel.reverseWords.value ?: false
 
-    val unlearnedWords by viewModel.unlearnedWords.observeAsState(initial = emptyList())
+    val unlearnedWords by wordViewModel.unlearnedWords.observeAsState(initial = emptyList())
 
     var currentWordIndex by remember { mutableStateOf(0) }
     var showTranslation by remember { mutableStateOf(false) }
@@ -68,8 +64,7 @@ fun FlashcardScreen(
                 }
             },
         verticalArrangement = Arrangement.Center,
-
-        ) {
+    ) {
 
         if (unlearnedWords.isEmpty()) {
             Text(
@@ -80,6 +75,8 @@ fun FlashcardScreen(
             )
         } else {
             val currentWord = unlearnedWords[currentWordIndex]
+            val showCounter = settingsViewModel.showCounter.value ?: true
+            val revealTime = settingsViewModel.revealTime.value ?: 5
 
             Column(
                 modifier = Modifier
@@ -88,7 +85,6 @@ fun FlashcardScreen(
                     .background(MaterialTheme.colorScheme.surfaceVariant),
                 verticalArrangement = Arrangement.Center,
             ) {
-
                 Text(
                     text = if (reverseWords) currentWord.wordB else currentWord.wordA,
                     fontSize = 32.sp,
@@ -96,9 +92,6 @@ fun FlashcardScreen(
                     modifier = Modifier.align(CenterHorizontally)
                 )
             }
-
-            val showCounter = sharedPreferences.getBoolean("show_counter", true)
-            val revealTime = sharedPreferences.getInt("reveal_time", 5)
 
             Column(
                 modifier = Modifier
@@ -133,7 +126,6 @@ fun FlashcardScreen(
                         modifier = Modifier.align(CenterHorizontally)
                     )
                 }
-
             }
 
             Row(
@@ -142,7 +134,6 @@ fun FlashcardScreen(
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-
                 TextButton(onClick = {
                     showTranslation = !showTranslation
                 }) {
@@ -159,7 +150,7 @@ fun FlashcardScreen(
                         ))
                     showTranslation = false
                 }) {
-                    Text("Next Word")
+                    Text("Next")
                 }
             }
 

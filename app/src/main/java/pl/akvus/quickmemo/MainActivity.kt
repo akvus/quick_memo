@@ -76,7 +76,12 @@ class MainActivity : ComponentActivity() {
                             .padding(innerPadding),
                     ) {
                         composable("flashcard") {
-                            FlashcardScreen(viewModel(factory = WordViewModel.Factory))
+                            FlashcardScreen(
+                                viewModel(factory = WordViewModel.Factory),
+                                viewModel(
+                                    factory = SettingsViewModel.Factory
+                                )
+                            )
                         }
                         composable("settings") {
                             SettingsScreen(viewModel(factory = SettingsViewModel.Factory))

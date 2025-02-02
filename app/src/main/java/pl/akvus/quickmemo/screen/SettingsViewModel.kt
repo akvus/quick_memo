@@ -11,7 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
 
-class SettingsViewModel(application: Application) : AndroidViewModel(application) {
+class SettingsViewModel(
+    application: Application,
+    private val sharedPreferences: SharedPreferences
+) :
+    AndroidViewModel(application) {
     private val _revealTime = MutableLiveData<Int>()
     val revealTime: LiveData<Int> get() = _revealTime
     private val _showCounter = MutableLiveData<Boolean>()
@@ -19,9 +23,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     private val _reverseWords = MutableLiveData<Boolean>()
     val reverseWords: LiveData<Boolean> get() = _reverseWords
 
-    // TODO inject?
-    private val sharedPreferences: SharedPreferences =
-        application.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
     init {
         _revealTime.value = sharedPreferences.getInt("reveal_time", 5)
@@ -64,9 +65,11 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                 extras: CreationExtras
             ): T {
                 val application = checkNotNull(extras[APPLICATION_KEY])
+                val sharedPreferences: SharedPreferences =
+                    application.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
                 return SettingsViewModel(
-                    application
+                    application, sharedPreferences
                 ) as T
             }
         }
