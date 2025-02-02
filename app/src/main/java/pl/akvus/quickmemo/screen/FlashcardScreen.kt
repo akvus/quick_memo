@@ -80,16 +80,18 @@ fun FlashcardScreen(
                     .background(MaterialTheme.colorScheme.surface),
                 verticalArrangement = Arrangement.Center,
             ) {
-                if (showTranslation)
+                val sharedPreferences =
+                    LocalContext.current.getSharedPreferences("settings", Context.MODE_PRIVATE)
+                val showCounter = sharedPreferences.getBoolean("show_counter", true)
+
+                if (showTranslation || !showCounter) {
                     Text(
                         text = unlearnedWords[currentWordIndex].wordB,
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.align(CenterHorizontally)
                     )
-                else {
-                    val sharedPreferences =
-                        LocalContext.current.getSharedPreferences("settings", Context.MODE_PRIVATE)
+                } else {
                     val revealTime = sharedPreferences.getInt("reveal_time", 5)
 
                     var counter by remember { mutableStateOf(revealTime) }
