@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -43,7 +44,6 @@ fun WordListScreen(
                     .fillMaxWidth()
                     .weight(1f)
             ) {
-
                 items(allWords.size) { index ->
                     val word = allWords[index]
                     var showUpdateDialog by remember { mutableStateOf(false) }
@@ -59,10 +59,11 @@ fun WordListScreen(
                             checked = word.isLearned,
                             onCheckedChange = { viewModel.updateWord(word.copy(isLearned = !word.isLearned)) }
                         )
-                        Text(text = word.wordA)
-                        Text(text = " - ")
-                        Text(text = word.wordB)
-                        Spacer(modifier = Modifier.weight(1f))
+                        Text(
+                            text = word.wordA + " - " + word.wordB,
+                            modifier = Modifier.weight(1f),
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
                         IconButton(onClick = {
                             showUpdateDialog = true
                         }) {
