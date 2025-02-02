@@ -56,7 +56,7 @@ fun FlashcardScreen(
                     currentWordIndex =
                         (Random.nextInt(
                             0,
-                            unlearnedWords.size - 1
+                            unlearnedWords.size
                         ))
                     showTranslation = false
                 } else {
@@ -147,7 +147,7 @@ fun FlashcardScreen(
                     currentWordIndex =
                         (Random.nextInt(
                             0,
-                            unlearnedWords.size - 1
+                            unlearnedWords.size
                         ))
                     showTranslation = false
                 }) {
