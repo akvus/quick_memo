@@ -29,16 +29,16 @@ class SettingsViewModel(
 
 
     init {
-        _revealTime.value = sharedPreferences.getInt("reveal_time", DEFAULT_REVEAL_TIME)
-        _showCounter.value = sharedPreferences.getBoolean("show_counter", DEFAULT_SHOW_COUNTER)
-        _reverseWords.value = sharedPreferences.getBoolean("reverse_words", DEFAULT_REVERSE_WORDS)
+        _revealTime.value = sharedPreferences.getInt(REVEAL_TIME_KEY, DEFAULT_REVEAL_TIME)
+        _showCounter.value = sharedPreferences.getBoolean(SHOW_COUNTER_KEY, DEFAULT_SHOW_COUNTER)
+        _reverseWords.value = sharedPreferences.getBoolean(REVERSE_WORDS_KEY, DEFAULT_REVERSE_WORDS)
     }
 
     fun setRevealTime(time: Int) {
         _revealTime.value = time
 
         with(sharedPreferences.edit()) {
-            putInt("reveal_time", time)
+            putInt(REVEAL_TIME_KEY, time)
             apply()
         }
     }
@@ -47,7 +47,7 @@ class SettingsViewModel(
         _showCounter.value = show
 
         with(sharedPreferences.edit()) {
-            putBoolean("show_counter", show)
+            putBoolean(SHOW_COUNTER_KEY, show)
             apply()
         }
     }
@@ -56,12 +56,20 @@ class SettingsViewModel(
         _reverseWords.value = reverse
 
         with(sharedPreferences.edit()) {
-            putBoolean("reverse_words", reverse)
+            putBoolean(REVERSE_WORDS_KEY, reverse)
             apply()
         }
     }
 
+
     companion object {
+        private const val PREFERENCES_NAME = "settings"
+
+        private const val SHOW_COUNTER_KEY = "show_counter"
+        private const val REVERSE_WORDS_KEY = "reverse_words"
+        private const val REVEAL_TIME_KEY = "reveal_time"
+
+
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(
@@ -70,7 +78,7 @@ class SettingsViewModel(
             ): T {
                 val application = checkNotNull(extras[APPLICATION_KEY])
                 val sharedPreferences: SharedPreferences =
-                    application.getSharedPreferences("settings", Context.MODE_PRIVATE)
+                    application.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
                 return SettingsViewModel(
                     application, sharedPreferences
