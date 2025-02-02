@@ -16,7 +16,7 @@ interface WordDao {
     @Query("SELECT * FROM words WHERE isLearned = 0 ORDER BY RANDOM()")
     suspend fun getUnlearnedWords(): List<WordEntity>
 
-    @Query("SELECT * FROM words")
+    @Query("SELECT * FROM words ORDER BY wordA")
     fun getAllWords(): LiveData<List<WordEntity>>
 
     @Update
