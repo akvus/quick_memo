@@ -23,13 +23,18 @@ class WordViewModel(private val wordDao: WordDao) : ViewModel() {
 
     fun insertWord(wordA: String, wordB: String) {
         viewModelScope.launch {
-            wordDao.insert(WordEntity(wordA = wordA, wordB = wordB))
+            wordDao.insert(WordEntity(wordA = wordA.trim(), wordB = wordB.trim()))
         }
     }
 
     fun updateWord(word: WordEntity) {
         viewModelScope.launch {
-            wordDao.updateWord(word)
+            wordDao.updateWord(
+                word.copy(
+                    wordA = word.wordA.trim(),
+                    wordB = word.wordB.trim()
+                )
+            )
         }
     }
 
