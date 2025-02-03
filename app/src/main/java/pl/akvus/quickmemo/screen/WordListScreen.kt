@@ -70,7 +70,9 @@ fun WordListScreen(
                     )
                     Text(
                         text = word.wordA.trim() + " - " + word.wordB.trim(),
-                        color = if (word.color != null) Color(color = word.color) else Color.Unspecified,
+                        color = if (word.color != null)
+                            Color(color = word.color)
+                        else Color.Unspecified,
                         modifier = Modifier
                             .weight(1f)
                             .clickable { showUpdateDialog = true },

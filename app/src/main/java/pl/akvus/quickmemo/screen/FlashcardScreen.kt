@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -81,6 +82,10 @@ fun FlashcardScreen(
 
             val showCounter = settingsViewModel.showCounter.value ?: DEFAULT_SHOW_COUNTER
             val revealTime = settingsViewModel.revealTime.value ?: DEFAULT_REVEAL_TIME
+            val color =
+                if (currentWord.color != null)
+                    Color(color = currentWord.color)
+                else Color.Unspecified
 
             Column(
                 modifier = Modifier
@@ -91,6 +96,7 @@ fun FlashcardScreen(
             ) {
                 Text(
                     text = if (reverseWords) currentWord.wordB else currentWord.wordA,
+                    color = color,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
                     lineHeight = 36.sp,
@@ -111,6 +117,7 @@ fun FlashcardScreen(
                 if (showTranslation || !showCounter) {
                     Text(
                         text = if (reverseWords) currentWord.wordA else currentWord.wordB,
+                        color = color,
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
                         lineHeight = 36.sp,
