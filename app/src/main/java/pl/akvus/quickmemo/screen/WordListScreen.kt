@@ -72,7 +72,7 @@ fun WordListScreen(
                         onCheckedChange = { wordViewModel.updateWord(word.copy(isLearned = !word.isLearned)) }
                     )
                     Text(
-                        text = word.wordA + " - " + word.wordB,
+                        text = word.wordA.trim() + " - " + word.wordB.trim(),
                         modifier = Modifier.weight(1f),
                     )
                     Spacer(modifier = Modifier.width(8.dp))
