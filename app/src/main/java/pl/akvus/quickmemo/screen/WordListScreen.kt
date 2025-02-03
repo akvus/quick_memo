@@ -1,5 +1,6 @@
 package pl.akvus.quickmemo.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,11 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -75,14 +72,11 @@ fun WordListScreen(
                     Text(
                         text = word.wordA.trim() + " - " + word.wordB.trim(),
                         color = if (word.color != null) Color(color = word.color) else Color.Unspecified,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable { showUpdateDialog = true },
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    IconButton(onClick = {
-                        showUpdateDialog = true
-                    }) {
-                        Icon(Icons.Default.Edit, contentDescription = "Update")
-                    }
 
                     DeleteWordWidget(word = word, wordViewModel = wordViewModel)
 
