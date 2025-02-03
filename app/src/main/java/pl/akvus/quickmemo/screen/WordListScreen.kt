@@ -23,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import pl.akvus.quickmemo.AddWordDialog
 
 @Composable
 fun WordListScreen(
@@ -81,7 +80,7 @@ fun WordListScreen(
                     DeleteWordWidget(word = word, wordViewModel = wordViewModel)
 
                     if (showUpdateDialog)
-                        AddWordDialog(
+                        SaveWordDialog(
                             word,
                             onDismiss = { showUpdateDialog = false },
                             onWordAdded = { wordA, wordB, color ->
@@ -115,7 +114,7 @@ fun WordListScreen(
         }
 
         if (showAddDialog) {
-            AddWordDialog(
+            SaveWordDialog(
                 null,
                 onDismiss = { showAddDialog = false },
                 onWordAdded = { wordA, wordB, color ->

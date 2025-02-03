@@ -1,4 +1,4 @@
-package pl.akvus.quickmemo
+package pl.akvus.quickmemo.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,7 +22,7 @@ import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import pl.akvus.quickmemo.db.WordEntity
 
 @Composable
-fun AddWordDialog(
+fun SaveWordDialog(
     word: WordEntity?,
     onDismiss: () -> Unit,
     onWordAdded: (wordA: String, wordB: String, color: Int) -> Unit
