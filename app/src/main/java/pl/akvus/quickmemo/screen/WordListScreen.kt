@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import pl.akvus.quickmemo.AddWordDialog
 
@@ -73,6 +74,7 @@ fun WordListScreen(
                     )
                     Text(
                         text = word.wordA.trim() + " - " + word.wordB.trim(),
+                        color = if (word.color != null) Color(color = word.color) else Color.Unspecified,
                         modifier = Modifier.weight(1f),
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -88,8 +90,14 @@ fun WordListScreen(
                         AddWordDialog(
                             word,
                             onDismiss = { showUpdateDialog = false },
-                            onWordAdded = { wordA, wordB ->
-                                wordViewModel.updateWord(word.copy(wordA = wordA, wordB = wordB))
+                            onWordAdded = { wordA, wordB, color ->
+                                wordViewModel.updateWord(
+                                    word.copy(
+                                        wordA = wordA,
+                                        wordB = wordB,
+                                        color = color
+                                    )
+                                )
                                 showUpdateDialog = false
                             }
                         )
@@ -116,8 +124,8 @@ fun WordListScreen(
             AddWordDialog(
                 null,
                 onDismiss = { showAddDialog = false },
-                onWordAdded = { wordA, wordB ->
-                    wordViewModel.insertWord(wordA, wordB)
+                onWordAdded = { wordA, wordB, color ->
+                    wordViewModel.insertWord(wordA, wordB, color)
                     showAddDialog = false
                 }
             )

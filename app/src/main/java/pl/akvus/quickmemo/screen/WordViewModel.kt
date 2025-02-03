@@ -21,9 +21,9 @@ class WordViewModel(private val wordDao: WordDao) : ViewModel() {
         emitSource(wordDao.getAllWords())
     }
 
-    fun insertWord(wordA: String, wordB: String) {
+    fun insertWord(wordA: String, wordB: String, color: Int) {
         viewModelScope.launch {
-            wordDao.insert(WordEntity(wordA = wordA.trim(), wordB = wordB.trim()))
+            wordDao.insert(WordEntity(wordA = wordA.trim(), wordB = wordB.trim(), color = color))
         }
     }
 
