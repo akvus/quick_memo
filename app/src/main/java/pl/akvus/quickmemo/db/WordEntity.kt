@@ -1,6 +1,5 @@
 package pl.akvus.quickmemo.db
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,5 +9,5 @@ data class WordEntity(
     val wordA: String,
     val wordB: String,
     val isLearned: Boolean = false,
-    val color: Color? = null
+    val color: Int? = null
 )
