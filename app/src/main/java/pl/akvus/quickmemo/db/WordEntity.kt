@@ -9,5 +9,6 @@ data class WordEntity(
     val wordA: String,
     val wordB: String,
     val isLearned: Boolean = false,
+    val learntDate: Long? = null,
     val color: Int? = null
 )
