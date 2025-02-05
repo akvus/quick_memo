@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,6 +23,7 @@ import androidx.navigation.compose.rememberNavController
 import pl.akvus.quickmemo.screen.FlashcardScreen
 import pl.akvus.quickmemo.screen.SettingsScreen
 import pl.akvus.quickmemo.screen.SettingsViewModel
+import pl.akvus.quickmemo.screen.StatsScreen
 import pl.akvus.quickmemo.screen.WordListScreen
 import pl.akvus.quickmemo.screen.WordViewModel
 import pl.akvus.quickmemo.ui.theme.QuickMemoTheme
@@ -58,6 +60,14 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
                                 IconButton(onClick = {
+                                    navController.navigate("stats")
+                                }) {
+                                    Icon(
+                                        Icons.Filled.Done,
+                                        contentDescription = "Stats"
+                                    )
+                                }
+                                IconButton(onClick = {
                                     navController.navigate("settings")
                                 }) {
                                     Icon(
@@ -90,6 +100,9 @@ class MainActivity : ComponentActivity() {
                             WordListScreen(viewModel(factory = WordViewModel.Factory)) {
                                 navController.navigate("flashcard")
                             }
+                        }
+                        composable("stats") {
+                            StatsScreen(viewModel(factory = WordViewModel.Factory))
                         }
                     }
                 }
