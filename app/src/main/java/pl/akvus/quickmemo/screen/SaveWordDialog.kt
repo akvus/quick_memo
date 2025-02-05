@@ -10,6 +10,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -31,7 +32,7 @@ fun SaveWordDialog(
     val controller = rememberColorPickerController()
     var wordA by remember { mutableStateOf(word?.wordA ?: "") }
     var wordB by remember { mutableStateOf(word?.wordB ?: "") }
-    var color by remember { mutableStateOf(word?.color ?: 0) }
+    var color by remember { mutableIntStateOf(word?.color ?: 0) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
