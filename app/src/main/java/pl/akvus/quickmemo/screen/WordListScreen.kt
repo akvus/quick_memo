@@ -23,6 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun WordListScreen(
@@ -66,7 +68,11 @@ fun WordListScreen(
                 ) {
                     Checkbox(
                         checked = word.isLearned,
-                        onCheckedChange = { wordViewModel.updateWord(word.copy(isLearned = !word.isLearned)) }
+                        onCheckedChange = {
+                            wordViewModel.viewModelScope.launch {
+                                wordViewModel.reverseLearnt(word)
+                            }
+                        }
                     )
                     Text(
                         text = word.wordA.trim() + " - " + word.wordB.trim(),
@@ -86,14 +92,16 @@ fun WordListScreen(
                             word,
                             onDismiss = { showUpdateDialog = false },
                             onWordAdded = { wordA, wordB, color ->
-                                wordViewModel.updateWord(
-                                    word.copy(
-                                        wordA = wordA,
-                                        wordB = wordB,
-                                        color = color
+                                wordViewModel.viewModelScope.launch {
+                                    wordViewModel.updateWord(
+                                        word.copy(
+                                            wordA = wordA,
+                                            wordB = wordB,
+                                            color = color
+                                        )
                                     )
-                                )
-                                showUpdateDialog = false
+                                    showUpdateDialog = false
+                                }
                             }
                         )
                 }

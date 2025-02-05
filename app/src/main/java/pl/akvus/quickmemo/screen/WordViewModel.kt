@@ -27,15 +27,22 @@ class WordViewModel(private val wordDao: WordDao) : ViewModel() {
         }
     }
 
-    fun updateWord(word: WordEntity) {
-        viewModelScope.launch {
-            wordDao.updateWord(
-                word.copy(
-                    wordA = word.wordA.trim(),
-                    wordB = word.wordB.trim()
-                )
+    suspend fun updateWord(word: WordEntity) {
+        wordDao.updateWord(
+            word.copy(
+                wordA = word.wordA.trim(),
+                wordB = word.wordB.trim()
             )
-        }
+        )
+    }
+
+    suspend fun reverseLearnt(word: WordEntity) {
+        updateWord(
+            word.copy(
+                isLearned = !word.isLearned,
+                learntDate = if (word.isLearned) null else System.currentTimeMillis()
+            )
+        )
     }
 
     fun deleteWord(word: WordEntity) {

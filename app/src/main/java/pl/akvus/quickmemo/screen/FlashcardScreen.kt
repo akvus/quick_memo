@@ -28,7 +28,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 @Composable
@@ -78,7 +80,7 @@ fun FlashcardScreen(
                 modifier = Modifier.align(CenterHorizontally)
             )
         } else {
-            val currentWord = unlearnedWords[currentWordIndex]
+            val currentWord = unlearnedWords[currentWordIndex % unlearnedWords.size]
 
             val showCounter = settingsViewModel.showCounter.value ?: DEFAULT_SHOW_COUNTER
             val revealTime = settingsViewModel.revealTime.value ?: DEFAULT_REVEAL_TIME
@@ -166,8 +168,10 @@ fun FlashcardScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 TextButton(onClick = {
-                    wordViewModel.updateWord(currentWord.copy(isLearned = !currentWord.isLearned))
-                    nextWord()
+                    wordViewModel.viewModelScope.launch {
+                        wordViewModel.reverseLearnt(currentWord)
+                        nextWord()
+                    }
                 }) {
                     Text("Learned")
                 }
