@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,15 +21,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SettingsScreen(viewModel: SettingsViewModel) {
-    val revealTime by viewModel.revealTime.observeAsState(
-        initial = viewModel.revealTime.value ?: DEFAULT_REVEAL_TIME
+fun SettingsScreen(settingsViewModel: SettingsViewModel) {
+    val revealTime by settingsViewModel.revealTime.observeAsState(
+        initial = settingsViewModel.revealTime.value ?: DEFAULT_REVEAL_TIME
     )
-    val showCounter by viewModel.showCounter.observeAsState(
-        initial = viewModel.showCounter.value ?: DEFAULT_SHOW_COUNTER
+    val showCounter by settingsViewModel.showCounter.observeAsState(
+        initial = settingsViewModel.showCounter.value ?: DEFAULT_SHOW_COUNTER
     )
-    val reverseWords by viewModel.reverseWords.observeAsState(
-        initial = viewModel.reverseWords.value ?: DEFAULT_REVERSE_WORDS
+    val reverseWords by settingsViewModel.reverseWords.observeAsState(
+        initial = settingsViewModel.reverseWords.value ?: DEFAULT_REVERSE_WORDS
     )
 
     Column(
@@ -49,11 +50,10 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             TextField(
                 value = if (revealTime == 0) "" else revealTime.toString(),
                 onValueChange = {
-                    viewModel.setRevealTime(it.toIntOrNull() ?: DEFAULT_REVEAL_TIME)
+                    settingsViewModel.setRevealTime(it.toIntOrNull() ?: DEFAULT_REVEAL_TIME)
                 },
                 modifier = Modifier.weight(1f)
             )
-
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -67,7 +67,7 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             Switch(
                 checked = showCounter,
                 onCheckedChange = { isChecked ->
-                    viewModel.setShowCounter(isChecked)
+                    settingsViewModel.setShowCounter(isChecked)
                 }
             )
         }
@@ -83,10 +83,41 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             Switch(
                 checked = reverseWords,
                 onCheckedChange = { isChecked ->
-                    viewModel.setReverseWords(isChecked)
+                    settingsViewModel.setReverseWords(isChecked)
                 }
             )
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        if (false)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "Export")
+                Spacer(modifier = Modifier.weight(1f))
+                TextButton(onClick = {
+                    settingsViewModel.exportData()
+                }) {
+                    Text(text = "Share")
+                }
+            }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        if (false)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "Inpurt")
+                Spacer(modifier = Modifier.weight(1f))
+                TextButton(onClick = {
+                    //' TODO
+                }) {
+                    Text(text = "From file")
+                }
+            }
     }
 }
-

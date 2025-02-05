@@ -13,6 +13,10 @@ interface WordDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(word: WordEntity)
 
+    suspend fun insertAll(words: List<WordEntity>) {
+        words.forEach { insert(it) }
+    }
+
     @Query("SELECT * FROM words WHERE isLearned = 0 ORDER BY RANDOM()")
     fun getUnlearnedWords(): LiveData<List<WordEntity>>
 
