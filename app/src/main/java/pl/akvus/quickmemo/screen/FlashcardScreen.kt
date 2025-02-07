@@ -85,7 +85,7 @@ fun FlashcardScreen(
             val showCounter = settingsViewModel.showCounter.value ?: DEFAULT_SHOW_COUNTER
             val revealTime = settingsViewModel.revealTime.value ?: DEFAULT_REVEAL_TIME
             val color =
-                if (currentWord.color != null && currentWord.color != 0)
+                if (currentWord.color != null)
                     Color(color = currentWord.color)
                 else Color.Unspecified
 

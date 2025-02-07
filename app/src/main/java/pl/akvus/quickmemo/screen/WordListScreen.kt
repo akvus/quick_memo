@@ -33,7 +33,7 @@ fun WordListScreen(
 ) {
     val allWords by wordViewModel.allWords.observeAsState(initial = emptyList())
 
-    var showAddDialog by remember { mutableStateOf(false) }
+    var showSaveDialog by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
 
     val filteredWords = allWords.filter {
@@ -118,18 +118,18 @@ fun WordListScreen(
                 Text("Start Learning")
             }
 
-            TextButton(onClick = { showAddDialog = true }) {
+            TextButton(onClick = { showSaveDialog = true }) {
                 Text("Add Word")
             }
         }
 
-        if (showAddDialog) {
+        if (showSaveDialog) {
             SaveWordDialog(
                 null,
-                onDismiss = { showAddDialog = false },
+                onDismiss = { showSaveDialog = false },
                 onWordAdded = { wordA, wordB, color ->
                     wordViewModel.insertWord(wordA, wordB, color)
-                    showAddDialog = false
+                    showSaveDialog = false
                 }
             )
         }
