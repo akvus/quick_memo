@@ -70,37 +70,6 @@ class SettingsViewModel(
         }
     }
 
-    fun exportData() {
-        try {
-            val words = wordDao.getAllWords().value ?: return
-            val jsonWords = Gson().toJson(words)
-
-            val sendIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, jsonWords)
-                type = "text/plain"
-            }
-
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            application.startActivity(shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-
-        } catch (e: Exception) {
-            Log.e("GsonError", "Error " + e.message.toString())
-        }
-    }
-
-    fun importData() {
-        // TODO
-        val gson = Gson()
-        val jsonString = "[{\"wordA\":\"hello\",\"wordB\":\"world\"}, ...]"
-        val wordList: List<WordEntity> =
-            gson.fromJson(jsonString, object : TypeToken<List<WordEntity>>() {}.type)
-
-        viewModelScope.launch {
-            wordDao.insertAll(wordList)
-        }
-    }
-
     companion object {
         private const val PREFERENCES_NAME = "settings"
 
