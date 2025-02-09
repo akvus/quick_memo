@@ -87,37 +87,5 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel) {
                 }
             )
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        if (false)
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Export")
-                Spacer(modifier = Modifier.weight(1f))
-                TextButton(onClick = {
-                    settingsViewModel.exportData()
-                }) {
-                    Text(text = "Share")
-                }
-            }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        if (false)
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Inpurt")
-                Spacer(modifier = Modifier.weight(1f))
-                TextButton(onClick = {
-                    //' TODO
-                }) {
-                    Text(text = "From file")
-                }
-            }
     }
 }
